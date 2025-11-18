@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console JavaScript基础操作</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 12px 15px;
+            border-radius: 6px;
+            display: block;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .console {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+        }
+
+        .console-input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .console-input span {
+            color: #0f0;
+            margin-right: 10px;
+        }
+
+        .console-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+
+        .practice-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .practice-area button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .practice-area button:hover {
+            background: #2980b9;
+        }
+
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .tip {
+            background: #e1f5fe;
+            border-left: 4px solid #0288d1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success {
+            color: #27ae60;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .output {
+            margin-top: 10px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <h1>Console JavaScript基础操作</h1>
+
+            <div class="card">
+                <h2>打开浏览器Console</h2>
+                <p>在开始之前，你需要知道如何打开浏览器的开发者工具：</p>
+                <div class="step">
+                    <p><strong>Windows/Linux:</strong> 按 F12 或 Ctrl+Shift+I</p>
+                    <p><strong>Mac:</strong> 按 Cmd+Opt+I</p>
+                    <p>然后选择 "Console" 标签页</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>寻找元素</h2>
+                <p>在JavaScript中，有多种方法可以找到页面上的元素：</p>
+
+                <h3>1. 通过ID查找</h3>
+                <code>document.getElementById('element-id')</code>
+                <p>返回具有指定ID的元素</p>
+
+                <h3>2. 通过类名查找</h3>
+                <code>document.getElementsByClassName('class-name')</code>
+                <p>返回具有指定类名的所有元素的集合</p>
+
+                <h3>3. 通过标签名查找</h3>
+                <code>document.getElementsByTagName('div')</code>
+                <p>返回具有指定标签名的所有元素的集合</p>
+
+                <h3>4. 使用CSS选择器</h3>
+                <code>document.querySelector('.my-class')</code>
+                <p>返回与指定CSS选择器匹配的第一个元素</p>
+
+                <code>document.querySelectorAll('button')</code>
+                <p>返回与指定CSS选择器匹配的所有元素的集合</p>
+
+                <div class="tip">
+                    <p><strong>提示：</strong> <span class="highlight">querySelector</span> 和 <span class="highlight">querySelectorAll</span> 是最灵活和强大的选择元素方法。</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>点击元素</h2>
+                <p>找到元素后，你可以使用 <span class="highlight">.click()</span> 方法来模拟点击：</p>
+
+                <h3>基本点击操作</h3>
+                <code>document.querySelector('button').click()</code>
+                <p>点击页面上第一个按钮</p>
+
+                <h3>点击特定元素</h3>
+                <code>document.getElementById('my-button').click()</code>
+                <p>点击ID为"my-button"的元素</p>
+
+                <h3>点击多个元素</h3>
+                <code>let buttons = document.querySelectorAll('.btn');
+buttons.forEach(button => button.click());</code>
+                <p>点击所有类名为"btn"的元素</p>
+
+                <div class="tip">
+                    <p><strong>注意：</strong> 某些元素可能需要先等待它们加载完成才能点击。</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>实际应用示例</h2>
+                <p>结合寻找和点击操作的完整示例：</p>
+
+                <h3>示例1: 点击特定按钮</h3>
+                <code>// 找到并点击提交按钮
+let submitBtn = document.querySelector('input[type="submit"]');
+submitBtn.click();</code>
+
+                <h3>示例2: 点击列表中的所有项目</h3>
+                <code>// 找到所有列表项并依次点击
+let listItems = document.querySelectorAll('li');
+listItems.forEach(item => {
+    item.click();
+});</code>
+
+                <h3>示例3: 条件点击</h3>
+                <code>// 只点击包含特定文本的按钮
+let buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    if (button.textContent.includes('确认')) {
+        button.click();
+    }
+});</code>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="card">
+                <h2>练习区域</h2>
+                <p>尝试在右侧的Console中输入命令来操作这些元素：</p>
+
+                <div class="practice-area">
+                    <button id="btn1">按钮 1</button>
+                    <button id="btn2" class="special">特殊按钮</button>
+                    <button class="action-btn">操作按钮</button>
+                    <button class="action-btn">另一个操作按钮</button>
+
+                    <div class="output" id="output">
+                        <!-- 这里将显示点击结果 -->
+                    </div>
+                </div>
+
+                <h3>模拟Console</h3>
+                <div class="console" id="console-output">
+                    <div>欢迎使用JavaScript Console模拟器！</div>
+                    <div>尝试输入以下命令：</div>
+                    <div>document.querySelector('#btn1').click()</div>
+                    <div>document.querySelectorAll('.action-btn').forEach(btn => btn.click())</div>
+                </div>
+
+                <div class="console-input">
+                    <span>&gt;</span>
+                    <input type="text" id="console-input" placeholder="在这里输入JavaScript代码...">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>常见问题</h2>
+
+                <h3>1. 为什么我的点击没有效果？</h3>
+                <p>可能的原因：</p>
+                <ul>
+                    <li>元素尚未加载完成 - 尝试等待页面完全加载</li>
+                    <li>元素被其他元素覆盖 - 检查z-index和定位</li>
+                    <li>元素有事件监听器阻止默认行为</li>
+                </ul>
+
+                <h3>2. 如何检查是否找到了元素？</h3>
+                <p>将查找结果赋值给变量并打印：</p>
+                <code>let element = document.querySelector('#my-element');
+console.log(element);</code>
+                <p>如果返回 <span class="highlight">null</span>，则表示未找到元素</p>
+
+                <h3>3. 如何等待元素加载完成？</h3>
+                <p>使用 <span class="highlight">setTimeout</span> 或 <span class="highlight">setInterval</span> 等待元素出现：</p>
+                <code>function waitForElement(selector, callback) {
+    let element = document.querySelector(selector);
+    if (element) {
+        callback(element);
+    } else {
+        setTimeout(() => waitForElement(selector, callback), 100);
+    }
+}
+
+waitForElement('#my-button', (button) => {
+    button.click();
+});</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 练习区域的按钮点击处理
+        document.querySelectorAll('.practice-area button').forEach(button => {
+            button.addEventListener('click', function() {
+                const output = document.getElementById('output');
+                output.innerHTML = `<p class="success">已点击: ${this.textContent}</p>`;
+            });
+        });
+
+        // 模拟Console功能
+        const consoleInput = document.getElementById('console-input');
+        const consoleOutput = document.getElementById('console-output');
+
+        consoleInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim();
+                if (command) {
+                    // 添加用户输入到Console输出
+                    const userInput = document.createElement('div');
+                    userInput.textContent = '> ' + command;
+                    consoleOutput.appendChild(userInput);
+
+                    // 尝试执行命令
+                    try {
+                        let result;
+                        if (command.includes('console.log')) {
+                            // 处理console.log命令
+                            result = eval(command);
+                        } else if (command.startsWith('document.')) {
+                            // 执行文档操作
+                            result = eval(command);
+
+                            // 特殊处理点击命令
+                            if (command.includes('.click()')) {
+                                const output = document.getElementById('output');
+                                if (command.includes('#btn1')) {
+                                    output.innerHTML = `<p class="success">通过Console点击了: 按钮 1</p>`;
+                                } else if (command.includes('#btn2')) {
+                                    output.innerHTML = `<p class="success">通过Console点击了: 特殊按钮</p>`;
+                                } else if (command.includes('.action-btn')) {
+                                    output.innerHTML = `<p class="success">通过Console点击了所有操作按钮</p>`;
+                                }
+                            }
+                        } else {
+                            result = eval(command);
+                        }
+
+                        // 显示执行结果
+                        if (result !== undefined) {
+                            const resultElement = document.createElement('div');
+                            resultElement.textContent = result;
+                            consoleOutput.appendChild(resultElement);
+                        }
+                    } catch (error) {
+                        // 显示错误信息
+                        const errorElement = document.createElement('div');
+                        errorElement.textContent = '错误: ' + error.message;
+                        errorElement.className = 'error';
+                        consoleOutput.appendChild(errorElement);
+                    }
+
+                    // 清空输入并滚动到底部
+                    this.value = '';
+                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                }
+            }
+        });
+
+        // 添加一些示例命令到Console输出
+        const examples = [
+            "// 尝试这些命令:",
+            "document.querySelector('#btn1').click()",
+            "document.querySelectorAll('.action-btn').length",
+            "document.getElementById('btn2').textContent",
+            "document.querySelectorAll('.action-btn').forEach(btn => btn.click())"
+        ];
+
+        examples.forEach(example => {
+            const exampleElement = document.createElement('div');
+            exampleElement.textContent = example;
+            exampleElement.style.color = '#888';
+            consoleOutput.appendChild(exampleElement);
+        });
+    </script>
+</body>
+</html>

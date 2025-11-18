@@ -1,0 +1,6 @@
+# ide systing
+.vscode/
+.idea/
+
+# test file
+test/
