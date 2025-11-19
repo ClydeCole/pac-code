@@ -3,4 +3,6 @@
 .idea/
 
 # test file
+test.py
 test/
+cookies/
