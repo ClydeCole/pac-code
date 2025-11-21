@@ -6,6 +6,10 @@ from lxml import etree
 from concurrent.futures import ThreadPoolExecutor
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+def safe_filename(name):
+    import re
+    """移除不能用於檔名的字元"""
+    return re.sub(r'[\\/*?:"<>|]', '_', name)
 
 def make_headers(cookie_num):
     """
@@ -134,9 +138,11 @@ class GetContent:
         return user_name_list, edit_time_list, comment_list
 
     @staticmethod
-    def write_files(user_name, edit_time, comments):
+    def write_files(tid, title, user_name, edit_time, comments):
         """
 
+        :param title:
+        :param tid:
         :param user_name:
         :param edit_time:
         :param comments:
@@ -147,7 +153,8 @@ class GetContent:
                 print(f"文件已經存在:text.txt")
                 exit()
 
-        with open(f'text.txt', 'a+') as f:
+        title = safe_filename(title)
+        with open(f"download/{tid}{title}.txt", 'a+') as f:
             for name, time, comment in zip(user_name, edit_time, comments):
                 for a_name, a_time, a_comment in zip(name, time, comment):
                     if not isinstance(a_comment[0], list):
@@ -181,13 +188,13 @@ if __name__ == '__main__':
     print(tid_lt)
     print(page_lt)
 
-    def run(tid, page):
+    def run(tid, title, page):
         user_name_list, edit_time_list, comment_list = get.get_content(tid, page)
-        get.write_files(user_name_list, edit_time_list, comment_list)
+        get.write_files(tid, title, user_name_list, edit_time_list, comment_list)
 
-    with ThreadPoolExecutor(max_workers=50) as executor:
-        for tid, page in zip(tid_lt, page_lt):
-            executor.submit(run, tid, page)
+    with ThreadPoolExecutor(max_workers=36) as executor:
+        for tid, title, page in zip(tid_lt, title_lt, page_lt):
+            executor.submit(run, tid, title, page)
     print("all done")
 
 
